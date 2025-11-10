@@ -28,13 +28,11 @@ class Store:
     def order(self, shopping_list) -> float:
         """
         Processes an order for multiple products.
-
         Args:
-            shopping_list (list of tuples): Each tuple contains a Product object and
-            the quantity to buy (int).
+            shopping_list (list of tuples):
+            Each tuple contains a Product object and the quantity to buy (int).
         Returns:
             float: Total price of all products successfully purchased.
-
         Raises:
             Exception: If a product cannot be purchased due to insufficient
             quantity or if the product is inactive.
@@ -47,14 +45,13 @@ class Store:
                 print(f"Could not buy {products.name}: {e}")
         return total_price
 
+    def __contains__(self, product):
+        """Check if a product exists in the store using 'in' operator"""
+        return product in self.product
 
-product_list = [
-    product.Product("MacBook Air M2", price=1450, quantity=100),
-    product.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-    product.Product("Google Pixel 7", price=500, quantity=250),
-]
-
-best_buy = Store(product_list)
-products = best_buy.get_all_products()
-print(best_buy.get_total_quantity())
-print(best_buy.order([(products[0], 1), (products[1], 2)]))
+    def __add__(self, others):
+        """Combine two stores using + operator"""
+        if not isinstance(others, Store):
+            return NotImplemented
+        combined_product = self.product + others.product
+        return combined_product
