@@ -1,3 +1,6 @@
+import promotion
+
+
 class Product:
     def __init__(self, name, price, quantity):
         if not isinstance(name, str) or name.strip() == "":
@@ -10,6 +13,7 @@ class Product:
         self.price = float(price)
         self.quantity = quantity
         self.active = True
+        self.promotion = None
 
     def get_quantity(self) -> int:
         """Return current quantity as int."""
@@ -35,6 +39,14 @@ class Product:
         """Deactivate the product."""
         self.active = False
 
+    def get_promotion(self):
+        """Get the current promotion"""
+        return self.promotion
+
+    def set_promotion(self, promotion):
+        """Set a promotion for a product"""
+        self.promotion = promotion
+
     def show(self):
         """Print the product."""
         print(f"{self.name} , Price: {self.price}, Quantity: {self.quantity}")
@@ -51,7 +63,11 @@ class Product:
             raise Exception("Cannot buy: the product is not avaible.")
         if quantity > self.quantity:
             raise Exception("Cannot buy: not enough stock avaible.")
-        total_price = quantity * self.price
+
+        if self.promotion:
+            total_price = self.promotion.apply_promotion(self, quantity)
+        else:
+            total_price = quantity * self.price
         self.set_quantity(self.quantity - quantity)
         return total_price
 
