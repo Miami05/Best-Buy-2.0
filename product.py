@@ -1,5 +1,5 @@
 class Product:
-    def __init__(self, name, price, quantity, maximum=None):
+    def __init__(self, name, price, quantity):
         if not isinstance(name, str) or name.strip() == "":
             raise ValueError("Name must be a non empty string")
         if not isinstance(price, (int, float)) or price < 0:
@@ -11,7 +11,6 @@ class Product:
         self._quantity = quantity
         self._active = True
         self._promotion = None
-        self.maximum = maximum
 
     @property
     def quantity(self):
@@ -90,8 +89,7 @@ class Product:
     def __str__(self):
         """String representation of the product."""
         promotion_info = f", Promotion: {self.promotion.name}" if self.promotion else ""
-        max_info = f"\nMaximum per purchase: {self.maximum}" if self.maximum else ""
-        return f"{self.name}, Price: ${self.price}, Quantity: {self.quantity}{promotion_info}{max_info}"
+        return f"{self.name}, Price: ${self.price}, Quantity: {self.quantity}{promotion_info}"
 
     def show(self):
         """Print the product (kept for backward compatibility)."""
@@ -120,8 +118,6 @@ class Product:
             raise ValueError("Quantity must be a positive integer.")
         if not self.active:
             raise Exception("Cannot buy: the product is not avaible.")
-        if self.maximum and quantity > self.maximum:
-            raise Exception(f"Cannot buy: maximum purchase limit is {self.maximum}.")
         if quantity > self.quantity:
             raise Exception("Cannot buy: not enough stock avaible.")
 
@@ -186,6 +182,8 @@ class LimitedProduct(Product):
         Buy a given quantity with maximum limit enforcement.
         Returns total price with promotion applied if available.
         """
+        if not instance(quantity, int) or quantity <= 0:
+            raise ValueError("Quantity must be a positive integer.")
         if quantity > self.maximum:
             raise Exception(f"Cannot buy: maximum purchase limit is {self.maximum}.")
         return super().buy(quantity)

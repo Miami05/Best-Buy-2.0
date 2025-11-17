@@ -54,4 +54,4 @@ class Store:
         if not isinstance(others, Store):
             return NotImplemented
         combined_product = self.product + others.product
-        return combined_product
+        return Store(combined_product)

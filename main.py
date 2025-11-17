@@ -1,6 +1,5 @@
-from product import Product
+from product import Product, LimitedProduct, NonStockedProduct
 from store import Store
-
 
 def make_order(store: Store):
     """Handles the process of creating an order and buying products."""
@@ -82,9 +81,13 @@ def start(store: Store):
 
 
 def main():
-    bose = Product("Bose", 250, 500)
+    bose = Product("Bose Headphones", 250, 500)
     mac = Product("MacBook Air M2", 1450, 100)
-    store = Store([bose, mac])
+    cable = Product("USB-C Cable", 10, 200)
+    ebook = NonStockedProduct("Python E‑Book", 30)
+    ps5 = LimitedProduct("PlayStation 5", 600, 5, maximum=1)
+
+    store = Store([bose, mac, cable, ebook, ps5])
     start(store)
 
 
