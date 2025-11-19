@@ -182,7 +182,7 @@ class LimitedProduct(Product):
         Buy a given quantity with maximum limit enforcement.
         Returns total price with promotion applied if available.
         """
-        if not instance(quantity, int) or quantity <= 0:
+        if not isinstance(quantity, int) or quantity <= 0:
             raise ValueError("Quantity must be a positive integer.")
         if quantity > self.maximum:
             raise Exception(f"Cannot buy: maximum purchase limit is {self.maximum}.")

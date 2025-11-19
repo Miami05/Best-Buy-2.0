@@ -1,5 +1,6 @@
 from product import Product, LimitedProduct, NonStockedProduct
 from store import Store
+from promotion import SecondHalfPrice, ThirdOneFree, PercentDiscount
 
 def make_order(store: Store):
     """Handles the process of creating an order and buying products."""
@@ -86,7 +87,12 @@ def main():
     cable = Product("USB-C Cable", 10, 200)
     ebook = NonStockedProduct("Python E‑Book", 30)
     ps5 = LimitedProduct("PlayStation 5", 600, 5, maximum=1)
-
+    second_half_price = SecondHalfPrice("Second Half Price!")
+    third_one_free = ThirdOneFree("Third One Free!")
+    thirty_percent = PercentDiscount("30% off!", 30)
+    bose.set_promotion(second_half_price)
+    mac.set_promotion(third_one_free)
+    ebook.set_promotion(thirty_percent)
     store = Store([bose, mac, cable, ebook, ps5])
     start(store)
 

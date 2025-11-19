@@ -6,7 +6,6 @@ class Promotion(ABC):
 
     def __init__(self, name):
         self.name = name
-
     @abstractmethod
     def apply_promotion(self, product, quantity) -> float:
         """
